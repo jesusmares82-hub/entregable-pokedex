@@ -1,6 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import grass from "../img/grass.png";
+import poison from "../img/poison.png";
+import bug from "../img/bug.png";
+import dragon from "../img/dragon.png";
+import electric from "../img/electric.png";
+import ghost from "../img/ghost.png";
+import fire from "../img/fire.png";
+import fairy from "../img/fairy.png";
+import ice from "../img/ice.png";
+import fighting from "../img/fighting.png";
+import normal from "../img/normal.png";
+import psychic from "../img/psychic.png";
+import rock from "../img/rock.png";
+import dark from "../img/dark.png";
+import ground from "../img/ground.png";
+import flying from "../img/flying.png";
+import steel from "../img/steel.png";
+import water from "../img/water.png";
 
 const Pokedex = ({ name, url, type }) => {
   const [pokemon, setPokemon] = useState(null);
@@ -69,6 +87,56 @@ const Pokedex = ({ name, url, type }) => {
           : "my-card normal"
       }
     >
+      <div>
+        {pokemonTypes &&
+          pokemonTypes.map((value, index) => {
+            console.log(value.type.name);
+            return (
+              <img
+                width="20px"
+                src={
+                  value.type.name === "grass"
+                    ? grass
+                    : value.type.name === "poison"
+                    ? poison
+                    : value.type.name === "bug"
+                    ? bug
+                    : value.type.name === "steel"
+                    ? steel
+                    : value.type.name === "water"
+                    ? water
+                    : value.type.name === "dragon"
+                    ? dragon
+                    : value.type.name === "electric"
+                    ? electric
+                    : value.type.name === "ghost"
+                    ? ghost
+                    : value.type.name === "fire"
+                    ? fire
+                    : value.type.name === "fairy"
+                    ? fairy
+                    : value.type.name === "ice"
+                    ? ice
+                    : value.type.name === "fighting"
+                    ? fighting
+                    : value.type.name === "normal"
+                    ? normal
+                    : value.type.name === "psychic"
+                    ? psychic
+                    : value.type.name === "rock"
+                    ? rock
+                    : value.type.name === "ground"
+                    ? ground
+                    : value.type.name === "flying"
+                    ? flying
+                    : value.type.name === "dark"
+                    ? dark
+                    : normal
+                }
+              />
+            );
+          })}
+      </div>
       <img
         className="img-container"
         src={imageShown}
@@ -93,7 +161,7 @@ const Pokedex = ({ name, url, type }) => {
                 <span key={value.type.name + index}>
                   {index === 1 ? " /" : " "}{" "}
                   {value.type.name.charAt(0).toUpperCase() +
-                    value.type.name.slice(1)}
+                    value.type.name.slice(1)}{" "}
                 </span>
               );
             })}

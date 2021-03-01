@@ -33,7 +33,7 @@ h1 {
 .my-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /*align-items: center;*/
   justify-content: center;
   width: 15rem;
   height: 20rem;
