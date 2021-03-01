@@ -22,6 +22,7 @@ import water from "../img/water.png";
 
 const Pokedex = ({ name, url, type }) => {
   const [pokemon, setPokemon] = useState(null);
+  const [pokemonId, setPokemonId] = useState(null);
   const [pokemonShiny, setPokemonShiny] = useState(null);
   const [pokemonTypes, setPokemonTypes] = useState(null);
   const [imageShown, setImageShown] = useState(pokemon);
@@ -30,6 +31,8 @@ const Pokedex = ({ name, url, type }) => {
     const promise = axios(url);
 
     promise.then((res) => {
+      //console.log(res.data);
+      setPokemonId(res.data.id);
       setPokemon(res.data.sprites.front_default);
       setPokemonTypes(res.data.types);
       setPokemonShiny(
@@ -93,6 +96,7 @@ const Pokedex = ({ name, url, type }) => {
             console.log(value.type.name);
             return (
               <img
+                key={index + value.type.name}
                 width="20px"
                 src={
                   value.type.name === "grass"
@@ -144,14 +148,18 @@ const Pokedex = ({ name, url, type }) => {
         onMouseOver={() => setImageShown(pokemonShiny)}
         onMouseLeave={() => setImageShown(pokemon)}
       />
+
       <h2
         className="font-family"
         style={{
           margin: 3,
         }}
       >
-        <Link>{name.charAt(0).toUpperCase() + name.slice(1)}</Link>
+        <Link to={`/pokemon/`}>
+          {name.charAt(0).toUpperCase() + name.slice(1)}
+        </Link>
       </h2>
+
       <h6 className="font-family">
         <strong>
           Types:
