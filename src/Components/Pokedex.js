@@ -22,26 +22,41 @@ import water from "../img/water.png";
 
 const Pokedex = ({ name, url, type }) => {
   const [pokemon, setPokemon] = useState(null);
-  const [pokemonId, setPokemonId] = useState(null);
+  const [identifyPokemon, setIdentifyPokemon] = useState([]);
   const [pokemonShiny, setPokemonShiny] = useState(null);
   const [pokemonTypes, setPokemonTypes] = useState(null);
   const [imageShown, setImageShown] = useState(pokemon);
 
   useEffect(() => {
-    const promise = axios(url);
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
 
-    promise.then((res) => {
-      //console.log(res.data);
-      setPokemonId(res.data.id);
-      setPokemon(res.data.sprites.front_default);
-      setPokemonTypes(res.data.types);
-      setPokemonShiny(
-        res.data.sprites.front_shiny
-          ? res.data.sprites.front_shiny
-          : res.data.sprites.front_default
-      );
-      setImageShown(res.data.sprites.front_default);
-    });
+    const loadData = () => {
+      try {
+        axios.get(url, { cancelToken: source.token }).then((res) => {
+          setPokemon(res.data.sprites.front_default);
+          setPokemonTypes(res.data.types);
+          setPokemonShiny(
+            res.data.sprites.front_shiny
+              ? res.data.sprites.front_shiny
+              : res.data.sprites.front_default
+          );
+          setImageShown(res.data.sprites.front_default);
+          setIdentifyPokemon(res.data);
+        });
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("cancelled");
+        } else {
+          throw error;
+        }
+      }
+    };
+
+    loadData();
+    return () => {
+      source.cancel();
+    };
   }, []);
 
   return (
@@ -93,7 +108,6 @@ const Pokedex = ({ name, url, type }) => {
       <div>
         {pokemonTypes &&
           pokemonTypes.map((value, index) => {
-            console.log(value.type.name);
             return (
               <img
                 key={index + value.type.name}
@@ -148,14 +162,14 @@ const Pokedex = ({ name, url, type }) => {
         onMouseOver={() => setImageShown(pokemonShiny)}
         onMouseLeave={() => setImageShown(pokemon)}
       />
-
+      {identifyPokemon && <span>{identifyPokemon.id}</span>}
       <h2
         className="font-family"
         style={{
           margin: 3,
         }}
       >
-        <Link to={`/pokemon/`}>
+        <Link to={`/pokemon/${identifyPokemon.id}`}>
           {name.charAt(0).toUpperCase() + name.slice(1)}
         </Link>
       </h2>

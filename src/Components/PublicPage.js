@@ -7,7 +7,7 @@ import SearchBox from "./SearchBox";
 const PublicPage = ({ children, ...props }) => {
   const [pokes, setPokes] = useState([]);
   const [query, setQuery] = useState("");
-  const [amount, setAmount] = useState("");
+  //const [amount, setAmount] = useState("");
   const [selectedPage, setSelectedPage] = useState(0);
   const [offset, setOffset] = useState(0);
   const [perPage, setPerPage] = useState(10);
@@ -62,7 +62,7 @@ const PublicPage = ({ children, ...props }) => {
   const handleSearch = (value, setSearchTerm, value2, setFilterTerm) => {
     setQuery(value);
     setSearchTerm("");
-    setAmount(value2);
+    //setAmount(value2);
     setFilterTerm(10);
   };
 

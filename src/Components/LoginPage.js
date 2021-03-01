@@ -10,7 +10,7 @@ const LoginPage = () => {
     <button
       onClick={() =>
         signIn(() => {
-          history.push("/pokemon");
+          history.push(`/pokemon/:id`);
         })
       }
     >
