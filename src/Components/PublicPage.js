@@ -10,7 +10,7 @@ const PublicPage = ({ children, ...props }) => {
   //const [amount, setAmount] = useState("");
   const [selectedPage, setSelectedPage] = useState(0);
   const [offset, setOffset] = useState(0);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(4);
   const [pageCount, setPageCount] = useState(0);
 
   const getData = async () => {
@@ -59,17 +59,24 @@ const PublicPage = ({ children, ...props }) => {
     }
   }, [query, offset]);*/
 
-  const handleSearch = (value, setSearchTerm, value2, setFilterTerm) => {
+  const handleSearch = (value, setSearchTerm) => {
     setQuery(value);
-    setSearchTerm("");
+    //setSearchTerm("");
     //setAmount(value2);
-    setFilterTerm(10);
+    //setFilterTerm(10);
+  };
+
+  const handleSearchType = (value, setSearchTerm) => {
+    setQuery(value);
+    //setSearchTerm("");
+    //setAmount(value2);
+    //setFilterTerm(10);
   };
 
   const handleClear = (value) => {
     setQuery("");
     setOffset(0);
-    setPerPage(10);
+    setPerPage(4);
     setPageCount(0);
     setPokes([]);
   };
@@ -87,6 +94,7 @@ const PublicPage = ({ children, ...props }) => {
       </h1>
       <div>
         <SearchBox
+          handleSearchTermType={handleSearchType}
           handleSearchTerm={handleSearch}
           handleClearTerm={handleClear}
         />
@@ -94,14 +102,14 @@ const PublicPage = ({ children, ...props }) => {
       {pokes.length > 0 && (
         <>
           <ReactPaginate
-            className="color-text-a"
-            previousLabel={"prev"}
-            nextLabel={"next"}
-            breakLabel={"..."}
+            className="color-text-a text-center"
+            previousLabel={"<"}
+            nextLabel={">"}
+            breakLabel={""}
             breakClassName={"break-me"}
             pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
+            marginPagesDisplayed={0}
+            pageRangeDisplayed={9}
             onPageChange={handlePageClick}
             containerClassName={"pagination"}
             subContainerClassName={"pages pagination"}

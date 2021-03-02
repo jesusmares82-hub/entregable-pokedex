@@ -6,6 +6,7 @@ const PokemonDetails = () => {
   const { id } = useParams();
   const [pokemon, setPokemon] = useState(null);
   const [pokemonAbilities, setPokemonAbilities] = useState([]);
+  const [pokemonMoves, setPokemonMoves] = useState([]);
   //if (posts) {
   //const post = posts.find((value) => value.id === Number(id));
   //}
@@ -22,6 +23,7 @@ const PokemonDetails = () => {
           .then((res) => {
             setPokemon(res.data);
             setPokemonAbilities(res.data.abilities);
+            setPokemonMoves(res.data.moves);
           });
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -39,21 +41,40 @@ const PokemonDetails = () => {
   }, []);
 
   return (
-    <div>
+    <div className="text-center poke-details">
       {pokemon && (
         <>
-          <h2>
-            {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
-          </h2>
           <img
             width="150px"
             src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
             alt={pokemon.name}
           />
-          <p>{id}</p>
-          <h6 className="font-family">
+          <h2>
+            {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+          </h2>
+
+          <h4>
+            {" "}
+            Id: <span>{id}</span>{" "}
+          </h4>
+
+          <h4>
+            {" "}
+            Height: <span>{pokemon.height} Hexogramos</span>{" "}
+          </h4>
+
+          <h4>
+            {" "}
+            Order: <span>{pokemon.order}</span>{" "}
+          </h4>
+          <h4>
+            {" "}
+            Weight: <span>{pokemon.weight}</span>{" "}
+          </h4>
+
+          <h4> Abilities: </h4>
+          <h6>
             <strong>
-              Abilities:{" "}
               {pokemonAbilities &&
                 pokemonAbilities.map((value, index) => {
                   return (
@@ -66,10 +87,37 @@ const PokemonDetails = () => {
                 })}
             </strong>
           </h6>
+          <h4> Moves: </h4>
+          <h6>
+            <strong>
+              {pokemonMoves &&
+                pokemonMoves.map((value, index) => {
+                  return (
+                    <span key={value.move.name + index}>
+                      {index >= 1 ? " |" : " "}{" "}
+                      {value.move.name.charAt(0).toUpperCase() +
+                        value.move.name.slice(1)}{" "}
+                    </span>
+                  );
+                })}
+            </strong>
+          </h6>
         </>
       )}
+
       <p>
-        <Link to="/pokedex/">👈🏻 Back</Link>
+        <Link
+          to={{
+            pathname: `/pokedex/pokemon/${id}/encounters`,
+            id: id,
+          }}
+        >
+          Encounters
+        </Link>
+      </p>
+
+      <p>
+        <Link to="/pokedex">👈🏻 Back</Link>
       </p>
     </div>
   );

@@ -26,6 +26,7 @@ const Pokedex = ({ name, url, type }) => {
   const [pokemonShiny, setPokemonShiny] = useState(null);
   const [pokemonTypes, setPokemonTypes] = useState(null);
   const [imageShown, setImageShown] = useState(pokemon);
+  const [pokemonStats, setPokemonStats] = useState([]);
 
   useEffect(() => {
     const CancelToken = axios.CancelToken;
@@ -43,10 +44,12 @@ const Pokedex = ({ name, url, type }) => {
           );
           setImageShown(res.data.sprites.front_default);
           setIdentifyPokemon(res.data);
+          setPokemonStats(res.data.stats);
         });
       } catch (error) {
         if (axios.isCancel(error)) {
           console.log("cancelled");
+          console.log(error.response);
         } else {
           throw error;
         }
@@ -157,13 +160,14 @@ const Pokedex = ({ name, url, type }) => {
       </div>
       <img
         className="img-container"
+        width="100px"
         src={imageShown}
-        alt={"No photo available"}
+        alt={name}
         onMouseOver={() => setImageShown(pokemonShiny)}
         onMouseLeave={() => setImageShown(pokemon)}
       />
       {identifyPokemon && <span className="number">#{identifyPokemon.id}</span>}
-      <h2
+      <h5
         className="font-family"
         style={{
           margin: 3,
@@ -172,7 +176,7 @@ const Pokedex = ({ name, url, type }) => {
         <Link to={`/pokedex/pokemon/${identifyPokemon.id}`}>
           {name.charAt(0).toUpperCase() + name.slice(1)}
         </Link>
-      </h2>
+      </h5>
 
       <h6 className="font-family">
         <strong>
@@ -189,6 +193,23 @@ const Pokedex = ({ name, url, type }) => {
             })}
         </strong>
       </h6>
+      <div className="bg-color-white pl-2 pr-2 mt-4">
+        <h6 className="font-family text-center ">
+          <strong>
+            {pokemonStats &&
+              pokemonStats.map((value, index) => {
+                return (
+                  <span key={value.stat.name + index}>
+                    {index >= 1 ? " /" : " "}{" "}
+                    {value.stat.name.charAt(0).toUpperCase() +
+                      value.stat.name.slice(1)}{" "}
+                    {value.base_stat}{" "}
+                  </span>
+                );
+              })}
+          </strong>
+        </h6>
+      </div>
     </div>
   );
 };

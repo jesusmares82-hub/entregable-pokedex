@@ -6,6 +6,7 @@ import ProtectedPage from "./Components/ProtectedPage";
 import PublicPage from "./Components/PublicPage";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import PokemonDetails from "./Components/PokemonDetails";
+import EncountersPokemon from "./Components/EncountersPokemon";
 import { ProvideAuth } from "./Provider/AuthProvider";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -20,9 +21,9 @@ function App() {
             <li>
               <Link to="/pokedex">Pokedex Public</Link>
             </li>
-            <li>
+            {/*<li>
               <Link to="/pokemon/:id">Pokemon Private</Link>
-            </li>
+            </li>*/}
           </ul>
           <Switch>
             <Route exact path="/pokedex">
@@ -34,6 +35,11 @@ function App() {
             <Route
               path="/pokedex/pokemon/:id"
               render={({ match }) => <PokemonDetails />}
+            />
+            <Route
+              exact
+              path={"/pokedex/pokemon/:id/encounters"}
+              render={({ match }) => <EncountersPokemon />}
             />
             <ProtectedRoute
               path="/pokemon/:id"
