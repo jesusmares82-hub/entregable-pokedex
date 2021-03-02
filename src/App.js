@@ -5,6 +5,7 @@ import LoginPage from "./Components/LoginPage";
 import ProtectedPage from "./Components/ProtectedPage";
 import PublicPage from "./Components/PublicPage";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import PokemonDetails from "./Components/PokemonDetails";
 import { ProvideAuth } from "./Provider/AuthProvider";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -17,20 +18,27 @@ function App() {
 
           <ul style={{ listStyleType: "none" }}>
             <li>
-              <Link to="/pokedex">Pokedex</Link>
+              <Link to="/pokedex">Pokedex Public</Link>
             </li>
             <li>
-              <Link to="/pokemon">Pokemon</Link>
+              <Link to="/pokemon/:id">Pokemon Private</Link>
             </li>
           </ul>
           <Switch>
-            <Route path="/pokedex">
-              <PublicPage path="/pokemon" />
+            <Route exact path="/pokedex">
+              <PublicPage />
             </Route>
             <Route path="/login">
               <LoginPage />
             </Route>
-            <ProtectedRoute path="/pokemon">
+            <Route
+              path="/pokedex/pokemon/:id"
+              render={({ match }) => <PokemonDetails />}
+            />
+            <ProtectedRoute
+              path="/pokemon/:id"
+              render={({ match }) => <PokemonDetails />}
+            >
               <ProtectedPage />
             </ProtectedRoute>
           </Switch>

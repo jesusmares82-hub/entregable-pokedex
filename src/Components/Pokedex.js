@@ -105,7 +105,7 @@ const Pokedex = ({ name, url, type }) => {
           : "my-card normal"
       }
     >
-      <div>
+      <div className="icon-type">
         {pokemonTypes &&
           pokemonTypes.map((value, index) => {
             return (
@@ -162,14 +162,14 @@ const Pokedex = ({ name, url, type }) => {
         onMouseOver={() => setImageShown(pokemonShiny)}
         onMouseLeave={() => setImageShown(pokemon)}
       />
-      {identifyPokemon && <span>{identifyPokemon.id}</span>}
+      {identifyPokemon && <span className="number">#{identifyPokemon.id}</span>}
       <h2
         className="font-family"
         style={{
           margin: 3,
         }}
       >
-        <Link to={`/pokemon/${identifyPokemon.id}`}>
+        <Link to={`/pokedex/pokemon/${identifyPokemon.id}`}>
           {name.charAt(0).toUpperCase() + name.slice(1)}
         </Link>
       </h2>
