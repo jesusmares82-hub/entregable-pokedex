@@ -5,10 +5,14 @@ import FormControl from "react-bootstrap/FormControl";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const SearchBox = ({ handleSearchTerm, handleClearTerm }) => {
+const SearchBox = ({
+  handleSearchTermName,
+  handleSearchTermType,
+  handleClearTerm,
+}) => {
   const [searchTermType, setSearchTermType] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  //const [filterTerm, setFilterTerm] = useState(10);
+  const [filterTerm, setFilterTerm] = useState(10);
 
   const [types, setTypes] = useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -38,11 +42,7 @@ const SearchBox = ({ handleSearchTerm, handleClearTerm }) => {
             size="sm"
             custom
             onChange={(e) => {
-              //const value = e.target.value;
-              //console.log(value.toLowerCase());
-              //setSearchTermType(e.target.value.toLowerCase());
-              //console.log(searchTermType);
-              handleSearchTerm(e.target.value.toLowerCase());
+              handleSearchTermType(e.target.value.toLowerCase());
             }}
           >
             <option>Select a type</option>
@@ -59,7 +59,7 @@ const SearchBox = ({ handleSearchTerm, handleClearTerm }) => {
       <InputGroup className="pr-5 pl-5">
         <FormControl
           className="custom-select "
-          placeholder="Filter pokemon..."
+          placeholder="Pokemon name/id..."
           value={searchTerm}
           style={{
             width: "15rem",
@@ -73,7 +73,7 @@ const SearchBox = ({ handleSearchTerm, handleClearTerm }) => {
         <InputGroup.Append>
           <Button
             variant="outline-primary"
-            onClick={() => handleSearchTerm(searchTerm, setSearchTerm)}
+            onClick={() => handleSearchTermName(searchTerm, setSearchTerm)}
           >
             Search
           </Button>
