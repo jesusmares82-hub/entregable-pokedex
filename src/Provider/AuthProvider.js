@@ -17,7 +17,7 @@ const useProvideAuth = () => {
 
   const signIn = (cb) => {
     fakeAuthProvider.signIn(() => {
-      setUser("user");
+      setUser("Trainer Mares");
       cb();
     });
   };

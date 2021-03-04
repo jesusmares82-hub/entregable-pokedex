@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useAuth } from "../Provider/AuthProvider";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
 import Pokedex from "./Pokedex";
+import Spinner from "./Spiner";
 import SearchBox from "./SearchBox";
 
 const PublicPage = ({ children, ...props }) => {
@@ -10,12 +12,18 @@ const PublicPage = ({ children, ...props }) => {
   const [pokemon, setPokemon] = useState("");
   const [query, setQuery] = useState("");
   const [queryName, setQueryName] = useState("");
-  const [selectedPage, setSelectedPage] = useState(0);
   const [offset, setOffset] = useState(0);
   const [perPage, setPerPage] = useState(4);
   const [pageCount, setPageCount] = useState(0);
 
+  const [hasData, setHasData] = useState(true);
+
   const [showResults, setShowResults] = useState(false);
+
+  const [isData, setIsData] = useState("");
+
+  const { user } = useAuth();
+  console.log(user);
 
   const getData = async () => {
     if (query) {
@@ -33,6 +41,8 @@ const PublicPage = ({ children, ...props }) => {
       ));
       setPokes(postData);
       setPageCount(Math.ceil(data.length / perPage));
+      setHasData(true);
+      setIsData(query);
     }
   };
 
@@ -42,8 +52,9 @@ const PublicPage = ({ children, ...props }) => {
         .get(`https://pokeapi.co/api/v2/pokemon/${queryName}/`)
         .then((res) => {
           setPokemon(res.data);
-          console.log(res.data);
           setShowResults(true);
+          setHasData(true);
+          setIsData(queryName);
         });
     }
   };
@@ -55,6 +66,12 @@ const PublicPage = ({ children, ...props }) => {
   useEffect(() => {
     getDataPokemon();
   }, [queryName]);
+
+  useEffect(() => {
+    if (isData) {
+      getDataPokemon();
+    }
+  }, []);
 
   const handleSearchName = (value, setSearchTerm) => {
     setQueryName(value);
@@ -83,6 +100,9 @@ const PublicPage = ({ children, ...props }) => {
 
   return (
     <div>
+      <h6 className="text-center">
+        <strong>Welcome: {user}</strong>
+      </h6>
       <h1 className="text-center">
         <strong>POKEDEX</strong>
       </h1>
@@ -93,101 +113,107 @@ const PublicPage = ({ children, ...props }) => {
           handleClearTerm={handleClear}
         />
       </div>
-      {pokes.length > 0 &&
-        (console.log(pokes),
-        (
-          <>
-            <ReactPaginate
-              className="color-text-a text-center"
-              previousLabel={"<"}
-              nextLabel={">"}
-              breakLabel={""}
-              breakClassName={"break-me"}
-              pageCount={pageCount}
-              marginPagesDisplayed={0}
-              pageRangeDisplayed={9}
-              onPageChange={handlePageClick}
-              containerClassName={"pagination"}
-              subContainerClassName={"pages pagination"}
-              activeClassName={"active"}
-            />
-            <div className="pokegallery">{pokes}</div>
-          </>
-        ))}
-
-      {pokemon && (
+      {hasData ? (
         <>
-          <div
-            className={
-              pokemon
-                ? " my-card normal pt-3 mx-auto show"
-                : "my-card normal pt-3 hide"
-            }
-          >
-            {pokemon.sprites && (
-              <img
-                className="img-container"
-                width="100px"
-                src={pokemon.sprites.front_default}
-                alt={pokemon.name}
+          {pokes.length > 0 && (
+            <>
+              <ReactPaginate
+                className="color-text-a text-center"
+                previousLabel={"<"}
+                nextLabel={">"}
+                breakLabel={""}
+                breakClassName={"break-me"}
+                pageCount={pageCount}
+                marginPagesDisplayed={0}
+                pageRangeDisplayed={9}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
               />
-            )}
-            {pokemon.name && (
-              <h5
-                className="font-family"
-                style={{
-                  margin: 3,
-                }}
+
+              <div className="pokegallery">{pokes}</div>
+            </>
+          )}
+
+          {pokemon && (
+            <>
+              <div
+                className={
+                  pokemon
+                    ? " my-card normal pt-3 mx-auto show"
+                    : "my-card normal pt-3 hide"
+                }
               >
-                <Link to={`/pokedex/pokemon/${pokemon.id}`}>
-                  {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
-                </Link>
-              </h5>
-            )}
-            <span className="number">#{pokemon.id}</span>
-            {pokemon.types && (
-              <h6 className="font-family">
-                <strong>
-                  Type:
-                  {pokemon.types[0].type.name.charAt(0).toUpperCase() +
-                    pokemon.types[0].type.name.slice(1)}{" "}
-                </strong>
-              </h6>
-            )}
-            {pokemon.stats && (
-              <div className="bg-color-white pl-2 pr-2 mt-4">
-                <h6 className="font-family text-center ">
-                  <strong>
-                    <p>
-                      {" "}
-                      {pokemon.stats[0].stat.name.charAt(0).toUpperCase() +
-                        pokemon.stats[0].stat.name.slice(1)}
-                      : {pokemon.stats[0].base_stat}{" "}
-                    </p>
-                    <span>
-                      {" "}
-                      {pokemon.stats[1].stat.name.charAt(0).toUpperCase() +
-                        pokemon.stats[1].stat.name.slice(1)}
-                      : {pokemon.stats[1].base_stat}{" "}
-                    </span>
-                    <span>
-                      {" "}
-                      {pokemon.stats[2].stat.name.charAt(0).toUpperCase() +
-                        pokemon.stats[2].stat.name.slice(1)}
-                      : {pokemon.stats[2].base_stat}{" "}
-                    </span>
-                    <p>
-                      {" "}
-                      {pokemon.stats[5].stat.name.charAt(0).toUpperCase() +
-                        pokemon.stats[5].stat.name.slice(1)}
-                      : {pokemon.stats[5].base_stat}{" "}
-                    </p>
-                  </strong>
-                </h6>
+                {pokemon.sprites && (
+                  <img
+                    className="img-container"
+                    width="100px"
+                    src={pokemon.sprites.front_default}
+                    alt={pokemon.name}
+                  />
+                )}
+                {pokemon.name && (
+                  <h5
+                    className="font-family"
+                    style={{
+                      margin: 3,
+                    }}
+                  >
+                    <Link to={`/pokedex/pokemon/${pokemon.id}`}>
+                      {pokemon.name.charAt(0).toUpperCase() +
+                        pokemon.name.slice(1)}
+                    </Link>
+                  </h5>
+                )}
+                <span className="number">#{pokemon.id}</span>
+                {pokemon.types && (
+                  <h6 className="font-family">
+                    <strong>
+                      Type:
+                      {pokemon.types[0].type.name.charAt(0).toUpperCase() +
+                        pokemon.types[0].type.name.slice(1)}{" "}
+                    </strong>
+                  </h6>
+                )}
+                {pokemon.stats && (
+                  <div className="bg-color-white pl-2 pr-2 mt-4">
+                    <h6 className="font-family text-center ">
+                      <strong>
+                        <p>
+                          {" "}
+                          {pokemon.stats[0].stat.name.charAt(0).toUpperCase() +
+                            pokemon.stats[0].stat.name.slice(1)}
+                          : {pokemon.stats[0].base_stat}{" "}
+                        </p>
+                        <span>
+                          {" "}
+                          {pokemon.stats[1].stat.name.charAt(0).toUpperCase() +
+                            pokemon.stats[1].stat.name.slice(1)}
+                          : {pokemon.stats[1].base_stat}{" "}
+                        </span>
+                        <span>
+                          {" "}
+                          {pokemon.stats[2].stat.name.charAt(0).toUpperCase() +
+                            pokemon.stats[2].stat.name.slice(1)}
+                          : {pokemon.stats[2].base_stat}{" "}
+                        </span>
+                        <p>
+                          {" "}
+                          {pokemon.stats[5].stat.name.charAt(0).toUpperCase() +
+                            pokemon.stats[5].stat.name.slice(1)}
+                          : {pokemon.stats[5].base_stat}{" "}
+                        </p>
+                      </strong>
+                    </h6>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </>
+          )}
         </>
+      ) : (
+        <Spinner />
       )}
     </div>
   );

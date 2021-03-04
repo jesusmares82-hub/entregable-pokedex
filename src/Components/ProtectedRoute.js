@@ -6,6 +6,7 @@ import { useAuth } from "../Provider/AuthProvider";
 
 const ProtectedRoute = ({ children, ...props }) => {
   const { user } = useAuth();
+  console.log(user);
   console.log(props);
   return (
     <Route

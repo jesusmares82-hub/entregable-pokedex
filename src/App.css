@@ -39,6 +39,15 @@ h1 {
   margin: 50px;
 }
 
+.buttons-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: end;
+  align-content: center;
+  margin: 50px;
+}
+
 .my-card {
   display: flex;
   flex-direction: column;

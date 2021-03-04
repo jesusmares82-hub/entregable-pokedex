@@ -1,6 +1,9 @@
 import React from "react";
 import { useAuth } from "../Provider/AuthProvider";
 import { useHistory } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import { RiLogoutCircleLine } from "react-icons/ri";
+
 const AuthButton = () => {
   const history = useHistory();
   console.log(history);
@@ -8,15 +11,17 @@ const AuthButton = () => {
   return (
     <div>
       {user ? (
-        <button
+        <Button
+          className="mt-4 ml-5 buttons-details"
+          variant="outline-danger"
           onClick={() =>
             signOut(() => {
               history.push(`/`);
             })
           }
         >
-          Logout
-        </button>
+          <RiLogoutCircleLine /> Logout
+        </Button>
       ) : (
         ""
       )}

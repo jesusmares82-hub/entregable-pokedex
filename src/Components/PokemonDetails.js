@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import { TiArrowBackOutline } from "react-icons/ti";
 
 const PokemonDetails = () => {
   const { id } = useParams();
+  let history = useHistory();
   const [pokemon, setPokemon] = useState(null);
   const [pokemonAbilities, setPokemonAbilities] = useState([]);
   const [pokemonMoves, setPokemonMoves] = useState([]);
@@ -115,7 +118,13 @@ const PokemonDetails = () => {
       </p>
 
       <p>
-        <Link to={`/pokedex`}>👈🏻 Back</Link>
+        <Button
+          className="mb-3"
+          variant="outline-info"
+          onClick={() => history.goBack()}
+        >
+          <TiArrowBackOutline /> Back
+        </Button>{" "}
       </p>
     </div>
   );

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Spinner from "./Spiner";
+import { useAuth } from "../Provider/AuthProvider";
 import { Link } from "react-router-dom";
 import grass from "../img/grass.png";
 import poison from "../img/poison.png";
@@ -21,15 +23,17 @@ import steel from "../img/steel.png";
 import water from "../img/water.png";
 
 const Pokedex = ({ name, url, type }) => {
-  //console.log(url);
-  //console.log(name);
-  //console.log(type);
   const [pokemon, setPokemon] = useState(null);
   const [identifyPokemon, setIdentifyPokemon] = useState([]);
   const [pokemonShiny, setPokemonShiny] = useState(null);
   const [pokemonTypes, setPokemonTypes] = useState(null);
   const [imageShown, setImageShown] = useState(pokemon);
   const [pokemonStats, setPokemonStats] = useState([]);
+
+  const [hasData, setHasData] = useState(false);
+
+  const { user } = useAuth();
+  console.log(user);
 
   useEffect(() => {
     const CancelToken = axios.CancelToken;
@@ -48,6 +52,7 @@ const Pokedex = ({ name, url, type }) => {
           setImageShown(res.data.sprites.front_default);
           setIdentifyPokemon(res.data);
           setPokemonStats(res.data.stats);
+          setHasData(true);
         });
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -111,108 +116,115 @@ const Pokedex = ({ name, url, type }) => {
           : "my-card normal"
       }
     >
-      <div className="icon-type">
-        {pokemonTypes &&
-          pokemonTypes.map((value, index) => {
-            return (
-              <img
-                key={index + value.type.name}
-                width="20px"
-                src={
-                  value.type.name === "grass"
-                    ? grass
-                    : value.type.name === "poison"
-                    ? poison
-                    : value.type.name === "bug"
-                    ? bug
-                    : value.type.name === "steel"
-                    ? steel
-                    : value.type.name === "water"
-                    ? water
-                    : value.type.name === "dragon"
-                    ? dragon
-                    : value.type.name === "electric"
-                    ? electric
-                    : value.type.name === "ghost"
-                    ? ghost
-                    : value.type.name === "fire"
-                    ? fire
-                    : value.type.name === "fairy"
-                    ? fairy
-                    : value.type.name === "ice"
-                    ? ice
-                    : value.type.name === "fighting"
-                    ? fighting
-                    : value.type.name === "normal"
-                    ? normal
-                    : value.type.name === "psychic"
-                    ? psychic
-                    : value.type.name === "rock"
-                    ? rock
-                    : value.type.name === "ground"
-                    ? ground
-                    : value.type.name === "flying"
-                    ? flying
-                    : value.type.name === "dark"
-                    ? dark
-                    : normal
-                }
-              />
-            );
-          })}
-      </div>
-      <img
-        className="img-container"
-        width="100px"
-        src={imageShown}
-        alt={name}
-        onMouseOver={() => setImageShown(pokemonShiny)}
-        onMouseLeave={() => setImageShown(pokemon)}
-      />
-      {identifyPokemon && <span className="number">#{identifyPokemon.id}</span>}
-      <h5
-        className="font-family"
-        style={{
-          margin: 3,
-        }}
-      >
-        <Link to={`/pokedex/pokemon/${identifyPokemon.id}`}>
-          {name.charAt(0).toUpperCase() + name.slice(1)}
-        </Link>
-      </h5>
-
-      <h6 className="font-family">
-        <strong>
-          Types:
-          {pokemonTypes &&
-            pokemonTypes.map((value, index) => {
-              return (
-                <span key={value.type.name + index}>
-                  {index === 1 ? " /" : " "}{" "}
-                  {value.type.name.charAt(0).toUpperCase() +
-                    value.type.name.slice(1)}{" "}
-                </span>
-              );
-            })}
-        </strong>
-      </h6>
-      <div className="bg-color-white pl-2 pr-2 mt-4">
-        <h6 className="font-family text-center ">
-          <strong>
-            {pokemonStats &&
-              pokemonStats.map((value, index) => {
+      {hasData ? (
+        <>
+          <div className="icon-type">
+            {pokemonTypes &&
+              pokemonTypes.map((value, index) => {
                 return (
-                  <span key={value.stat.name + index}>
-                    {index >= 1 ? " /" : " "}{" "}
-                    {value.stat.name.charAt(0).toUpperCase() +
-                      value.stat.name.slice(1)}{" "}
-                    {value.base_stat}{" "}
-                  </span>
+                  <img
+                    key={index + value.type.name}
+                    width="20px"
+                    src={
+                      value.type.name === "grass"
+                        ? grass
+                        : value.type.name === "poison"
+                        ? poison
+                        : value.type.name === "bug"
+                        ? bug
+                        : value.type.name === "steel"
+                        ? steel
+                        : value.type.name === "water"
+                        ? water
+                        : value.type.name === "dragon"
+                        ? dragon
+                        : value.type.name === "electric"
+                        ? electric
+                        : value.type.name === "ghost"
+                        ? ghost
+                        : value.type.name === "fire"
+                        ? fire
+                        : value.type.name === "fairy"
+                        ? fairy
+                        : value.type.name === "ice"
+                        ? ice
+                        : value.type.name === "fighting"
+                        ? fighting
+                        : value.type.name === "normal"
+                        ? normal
+                        : value.type.name === "psychic"
+                        ? psychic
+                        : value.type.name === "rock"
+                        ? rock
+                        : value.type.name === "ground"
+                        ? ground
+                        : value.type.name === "flying"
+                        ? flying
+                        : value.type.name === "dark"
+                        ? dark
+                        : normal
+                    }
+                  />
                 );
               })}
-          </strong>
-        </h6>
-      </div>
+          </div>
+          <img
+            className="img-container"
+            width="100px"
+            src={imageShown}
+            alt={name}
+            onMouseOver={() => setImageShown(pokemonShiny)}
+            onMouseLeave={() => setImageShown(pokemon)}
+          />
+          {identifyPokemon && (
+            <span className="number">#{identifyPokemon.id}</span>
+          )}
+          <h5
+            className="font-family"
+            style={{
+              margin: 3,
+            }}
+          >
+            <Link to={`/pokedex/pokemon/${identifyPokemon.id}`}>
+              {name.charAt(0).toUpperCase() + name.slice(1)}
+            </Link>
+          </h5>
+          <h6 className="font-family">
+            <strong>
+              Types:
+              {pokemonTypes &&
+                pokemonTypes.map((value, index) => {
+                  return (
+                    <span key={value.type.name + index}>
+                      {index === 1 ? " /" : " "}{" "}
+                      {value.type.name.charAt(0).toUpperCase() +
+                        value.type.name.slice(1)}{" "}
+                    </span>
+                  );
+                })}
+            </strong>
+          </h6>
+          <div className="bg-color-white pl-2 pr-2 mt-4">
+            <h6 className="font-family text-center ">
+              <strong>
+                {pokemonStats &&
+                  pokemonStats.map((value, index) => {
+                    return (
+                      <span key={value.stat.name + index}>
+                        {index >= 1 ? " /" : " "}{" "}
+                        {value.stat.name.charAt(0).toUpperCase() +
+                          value.stat.name.slice(1)}{" "}
+                        {value.base_stat}{" "}
+                      </span>
+                    );
+                  })}
+              </strong>
+            </h6>
+          </div>
+        </>
+      ) : (
+        <Spinner />
+      )}
     </div>
   );
 };
