@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../Provider/AuthProvider";
 import ReactPaginate from "react-paginate";
+import pokemonlogo from "../img/pokemon.png";
 import axios from "axios";
 import Pokedex from "./Pokedex";
 import Spinner from "./Spiner";
@@ -99,13 +100,11 @@ const PublicPage = ({ children, ...props }) => {
   };
 
   return (
-    <div>
+    <div className="text-center poke-details">
       <h6 className="text-center">
         <strong>Welcome: {user}</strong>
       </h6>
-      <h1 className="text-center">
-        <strong>POKEDEX</strong>
-      </h1>
+      <img src={pokemonlogo} alt="pokemon-logo" />
       <div>
         <SearchBox
           handleSearchTermType={handleSearchType}

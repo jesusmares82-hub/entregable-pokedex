@@ -31,7 +31,6 @@ h1 {
 }
 
 .poke-details {
-  /*display: flex;*/
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
@@ -236,7 +235,7 @@ ul {
 }
 
 li {
-  float: left;
+  float: center;
 }
 
 li a {

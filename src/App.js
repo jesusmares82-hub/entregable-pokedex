@@ -15,7 +15,7 @@ function App() {
   return (
     <ProvideAuth>
       <Router>
-        <div className="App">
+        <div>
           <AuthButton />
 
           <ul style={{ listStyleType: "none" }}>
@@ -39,9 +39,9 @@ function App() {
             <ProtectedRoute exact path={"/pokedex/pokemon/:id/encounters"}>
               <EncountersPokemon />
             </ProtectedRoute>
-            <ProtectedRoute exact path="/">
+            <Route exact path="/">
               <Home />
-            </ProtectedRoute>
+            </Route>
           </Switch>
         </div>
       </Router>

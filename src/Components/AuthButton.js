@@ -16,7 +16,7 @@ const AuthButton = () => {
           variant="outline-danger"
           onClick={() =>
             signOut(() => {
-              history.push(`/`);
+              history.push(`/login`);
             })
           }
         >

@@ -31,6 +31,7 @@ const useProvideAuth = () => {
 
   return {
     user,
+    setUser,
     signIn,
     signOut,
   };

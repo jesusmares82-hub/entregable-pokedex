@@ -2,11 +2,13 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { TiArrowBackOutline } from "react-icons/ti";
+import pokemon from "../img/pokemon.png";
 
 const Home = () => {
   let history = useHistory();
   return (
     <div>
+      <img src={pokemon} alt="pokemon-logo" />
       <h4>Welcome to Pokedex by Squad 12.</h4>
       <p>March 2020.</p>
       <Button
