@@ -10,9 +10,7 @@ const SearchBox = ({
   handleSearchTermType,
   handleClearTerm,
 }) => {
-  const [searchTermType, setSearchTermType] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterTerm, setFilterTerm] = useState(10);
 
   const [types, setTypes] = useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -25,7 +23,6 @@ const SearchBox = ({
         setTypes(res.data.results);
       });
     } catch (err) {
-      console.log(err);
       setLoading(false);
       setError(true);
       setErrorMsg("Types not found.");

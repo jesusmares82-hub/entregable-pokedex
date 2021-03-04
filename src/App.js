@@ -2,7 +2,6 @@ import "./App.css";
 import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 import AuthButton from "./Components/AuthButton";
 import LoginPage from "./Components/LoginPage";
-import ProtectedPage from "./Components/ProtectedPage";
 import PublicPage from "./Components/PublicPage";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import PokemonDetails from "./Components/PokemonDetails";
@@ -39,9 +38,9 @@ function App() {
             <ProtectedRoute exact path={"/pokedex/pokemon/:id/encounters"}>
               <EncountersPokemon />
             </ProtectedRoute>
-            <Route exact path="/">
+            <ProtectedRoute exact path="/">
               <Home />
-            </Route>
+            </ProtectedRoute>
           </Switch>
         </div>
       </Router>

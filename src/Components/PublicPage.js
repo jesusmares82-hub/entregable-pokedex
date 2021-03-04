@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../Provider/AuthProvider";
 import ReactPaginate from "react-paginate";
 import pokemonlogo from "../img/pokemon.png";
@@ -16,21 +16,14 @@ const PublicPage = ({ children, ...props }) => {
   const [offset, setOffset] = useState(0);
   const [perPage, setPerPage] = useState(4);
   const [pageCount, setPageCount] = useState(0);
-
   const [hasData, setHasData] = useState(true);
 
-  const [showResults, setShowResults] = useState(false);
-
-  const [isData, setIsData] = useState("");
-
   const { user } = useAuth();
-  console.log(user);
 
   const getData = async () => {
     if (query) {
       const res = await axios.get(`https://pokeapi.co/api/v2/type/${query}/`);
       const data = res.data.pokemon;
-      //console.log(data);
       const slices = data.slice(offset, offset + perPage);
       const postData = slices.map((value) => (
         <Pokedex
@@ -43,7 +36,6 @@ const PublicPage = ({ children, ...props }) => {
       setPokes(postData);
       setPageCount(Math.ceil(data.length / perPage));
       setHasData(true);
-      setIsData(query);
     }
   };
 
@@ -53,9 +45,7 @@ const PublicPage = ({ children, ...props }) => {
         .get(`https://pokeapi.co/api/v2/pokemon/${queryName}/`)
         .then((res) => {
           setPokemon(res.data);
-          setShowResults(true);
           setHasData(true);
-          setIsData(queryName);
         });
     }
   };
@@ -67,12 +57,6 @@ const PublicPage = ({ children, ...props }) => {
   useEffect(() => {
     getDataPokemon();
   }, [queryName]);
-
-  useEffect(() => {
-    if (isData) {
-      getDataPokemon();
-    }
-  }, []);
 
   const handleSearchName = (value, setSearchTerm) => {
     setQueryName(value);

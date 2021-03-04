@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "./Spiner";
-import { useAuth } from "../Provider/AuthProvider";
 import { Link } from "react-router-dom";
 import grass from "../img/grass.png";
 import poison from "../img/poison.png";
@@ -32,9 +31,6 @@ const Pokedex = ({ name, url, type }) => {
 
   const [hasData, setHasData] = useState(false);
 
-  const { user } = useAuth();
-  console.log(user);
-
   useEffect(() => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
@@ -57,7 +53,6 @@ const Pokedex = ({ name, url, type }) => {
       } catch (error) {
         if (axios.isCancel(error)) {
           console.log("cancelled");
-          console.log(error.response);
         } else {
           throw error;
         }

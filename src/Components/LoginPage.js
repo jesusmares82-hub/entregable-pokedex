@@ -5,14 +5,11 @@ import Button from "react-bootstrap/Button";
 import { RiLoginCircleLine } from "react-icons/ri";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import Form from "react-bootstrap/Form";
 
 const LoginPage = () => {
   const [userName, setUserName] = useState("");
   const history = useHistory();
-  console.log(history);
-  const { signIn, user, setUser } = useAuth();
-  console.log(user);
+  const { signIn, setUser } = useAuth();
 
   return (
     <>

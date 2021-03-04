@@ -6,7 +6,6 @@ import { RiLogoutCircleLine } from "react-icons/ri";
 
 const AuthButton = () => {
   const history = useHistory();
-  console.log(history);
   const { user, signOut } = useAuth();
   return (
     <div>

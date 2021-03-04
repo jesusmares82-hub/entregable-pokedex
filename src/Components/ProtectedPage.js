@@ -4,13 +4,9 @@ import { Link, useParams } from "react-router-dom";
 
 const ProtectedPage = ({ children, ...props }) => {
   const { id } = useParams();
-  console.log(id);
   const [pokemon, setPokemon] = useState(null);
   const [pokemonAbilities, setPokemonAbilities] = useState([]);
   const [pokemonMoves, setPokemonMoves] = useState([]);
-  //if (posts) {
-  //const post = posts.find((value) => value.id === Number(id));
-  //}
   useEffect(() => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
