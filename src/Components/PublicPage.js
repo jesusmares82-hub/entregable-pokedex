@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
 import Pokedex from "./Pokedex";
@@ -138,7 +139,9 @@ const PublicPage = ({ children, ...props }) => {
                   margin: 3,
                 }}
               >
-                {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+                <Link to={`/pokedex/pokemon/${pokemon.id}`}>
+                  {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+                </Link>
               </h5>
             )}
             <span className="number">#{pokemon.id}</span>
