@@ -19,32 +19,23 @@ function App() {
 
           <ul style={{ listStyleType: "none" }}>
             <li>
-              <Link to="/pokedex">Pokedex Public</Link>
+              <Link to="/"> Pokedex </Link>
             </li>
-            {/*<li>
-              <Link to="/pokemon/:id">Pokemon Private</Link>
-            </li>*/}
           </ul>
           <Switch>
-            <Route exact path="/pokedex">
+            <ProtectedRoute exact path="/pokedex">
               <PublicPage />
-            </Route>
+            </ProtectedRoute>
             <Route path="/login">
               <LoginPage />
             </Route>
-            <Route
-              path="/pokedex/pokemon/:id"
-              render={({ match }) => <PokemonDetails />}
-            />
-            <Route
-              exact
-              path={"/pokedex/pokemon/:id/encounters"}
-              render={({ match }) => <EncountersPokemon />}
-            />
-            <ProtectedRoute
-              path="/pokemon/:id"
-              render={({ match }) => <PokemonDetails />}
-            >
+            <ProtectedRoute exact path="/pokedex/pokemon/:id">
+              <PokemonDetails />
+            </ProtectedRoute>
+            <ProtectedRoute exact path={"/pokedex/pokemon/:id/encounters"}>
+              <EncountersPokemon />
+            </ProtectedRoute>
+            <ProtectedRoute path="/" render={({ match }) => <PokemonDetails />}>
               <ProtectedPage />
             </ProtectedRoute>
           </Switch>

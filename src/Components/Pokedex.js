@@ -21,9 +21,9 @@ import steel from "../img/steel.png";
 import water from "../img/water.png";
 
 const Pokedex = ({ name, url, type }) => {
-  console.log(url);
-  console.log(name);
-  console.log(type);
+  //console.log(url);
+  //console.log(name);
+  //console.log(type);
   const [pokemon, setPokemon] = useState(null);
   const [identifyPokemon, setIdentifyPokemon] = useState([]);
   const [pokemonShiny, setPokemonShiny] = useState(null);

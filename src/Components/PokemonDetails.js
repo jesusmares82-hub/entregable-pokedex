@@ -7,9 +7,7 @@ const PokemonDetails = () => {
   const [pokemon, setPokemon] = useState(null);
   const [pokemonAbilities, setPokemonAbilities] = useState([]);
   const [pokemonMoves, setPokemonMoves] = useState([]);
-  //if (posts) {
-  //const post = posts.find((value) => value.id === Number(id));
-  //}
+
   useEffect(() => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
@@ -117,7 +115,7 @@ const PokemonDetails = () => {
       </p>
 
       <p>
-        <Link to="/pokedex">👈🏻 Back</Link>
+        <Link to={`/pokedex`}>👈🏻 Back</Link>
       </p>
     </div>
   );

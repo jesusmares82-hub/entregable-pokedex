@@ -20,7 +20,7 @@ const PublicPage = ({ children, ...props }) => {
     if (query) {
       const res = await axios.get(`https://pokeapi.co/api/v2/type/${query}/`);
       const data = res.data.pokemon;
-      console.log(data);
+      //console.log(data);
       const slices = data.slice(offset, offset + perPage);
       const postData = slices.map((value) => (
         <Pokedex
@@ -92,31 +92,35 @@ const PublicPage = ({ children, ...props }) => {
           handleClearTerm={handleClear}
         />
       </div>
-      {pokes.length > 0 && (
-        <>
-          <ReactPaginate
-            className="color-text-a text-center"
-            previousLabel={"<"}
-            nextLabel={">"}
-            breakLabel={""}
-            breakClassName={"break-me"}
-            pageCount={pageCount}
-            marginPagesDisplayed={0}
-            pageRangeDisplayed={9}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
-          <div className="pokegallery">{pokes}</div>
-        </>
-      )}
+      {pokes.length > 0 &&
+        (console.log(pokes),
+        (
+          <>
+            <ReactPaginate
+              className="color-text-a text-center"
+              previousLabel={"<"}
+              nextLabel={">"}
+              breakLabel={""}
+              breakClassName={"break-me"}
+              pageCount={pageCount}
+              marginPagesDisplayed={0}
+              pageRangeDisplayed={9}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
+            <div className="pokegallery">{pokes}</div>
+          </>
+        ))}
 
       {pokemon && (
         <>
           <div
             className={
-              pokemon ? "my-card normal pt-3 show" : "my-card normal pt-3 hide"
+              pokemon
+                ? " my-card normal pt-3 mx-auto show"
+                : "my-card normal pt-3 hide"
             }
           >
             {pokemon.sprites && (
