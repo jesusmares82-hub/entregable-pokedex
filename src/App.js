@@ -30,12 +30,9 @@ function App() {
             <ProtectedRoute exact path={"/pokedex/pokemon/:id/encounters"}>
               <EncountersPokemon />
             </ProtectedRoute>
-            <Route path="*">
-              <p>La ruta es invalida</p>
-              <Link to="/">Ir a el Listado</Link>
-            </Route>
+
             <ProtectedRoute exact path="/">
-              <Home />
+              <LoginPage />
             </ProtectedRoute>
           </Switch>
         </div>

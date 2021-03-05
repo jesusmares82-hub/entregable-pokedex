@@ -75,7 +75,7 @@ const PokemonDetails = () => {
 
                   <h4>
                     {" "}
-                    Height: <span>{pokemon.height} Hexogramos</span>{" "}
+                    Height: <span>{pokemon.height / 10} M</span>{" "}
                   </h4>
 
                   <h4>
@@ -84,7 +84,7 @@ const PokemonDetails = () => {
                   </h4>
                   <h4>
                     {" "}
-                    Weight: <span>{pokemon.weight}</span>{" "}
+                    Weight: <span>{pokemon.weight / 10} Kg</span>{" "}
                   </h4>
                   <h4> Abilities: </h4>
                   <h6>

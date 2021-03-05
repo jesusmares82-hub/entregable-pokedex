@@ -33,7 +33,7 @@ const SearchBox = ({
     <div>
       <Form>
         <Form.Group className="pr-5 pl-5">
-          <Form.Label>Filter pokemon by types:</Form.Label>
+          <Form.Label>Filter pokemons by types:</Form.Label>
           <Form.Control
             as="select"
             size="sm"
@@ -54,7 +54,7 @@ const SearchBox = ({
           </Form.Control>
         </Form.Group>
       </Form>
-      <Form.Label>Filter pokemon by name or id:</Form.Label>
+      <Form.Label>Search pokemon by name or id:</Form.Label>
       <InputGroup className="pr-5 pl-5">
         <FormControl
           className="custom-select "

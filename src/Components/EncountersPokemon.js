@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { TiArrowBackOutline } from "react-icons/ti";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { SiOpenstreetmap } from "react-icons/si";
+import { GiPawPrint } from "react-icons/gi";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -47,7 +48,10 @@ const EncountersPokemon = () => {
 
   return (
     <div>
-      <h2> {"Encounters: "}</h2>
+      <h2>
+        {" "}
+        {`Where to find it? `} <GiPawPrint />
+      </h2>
       {hasData ? (
         <Container>
           <Row>

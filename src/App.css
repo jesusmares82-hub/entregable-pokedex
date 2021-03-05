@@ -21,6 +21,10 @@ h1 {
   letter-spacing: 3px;
 }
 
+.p-card {
+  margin-bottom: 1px;
+}
+
 .pokegallery {
   display: flex;
   flex-wrap: wrap;

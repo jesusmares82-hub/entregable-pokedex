@@ -185,18 +185,18 @@ const PublicPage = ({ children, ...props }) => {
                   <div className="bg-color-white pl-2 pr-2 mt-4">
                     <h6 className="font-family text-center ">
                       <strong>
-                        <p>
+                        <span>
                           {" "}
                           {pokemon.stats[0].stat.name.charAt(0).toUpperCase() +
                             pokemon.stats[0].stat.name.slice(1)}
                           : {pokemon.stats[0].base_stat}{" "}
-                        </p>
-                        <span>
+                        </span>
+                        <p className="p-card">
                           {" "}
                           {pokemon.stats[1].stat.name.charAt(0).toUpperCase() +
                             pokemon.stats[1].stat.name.slice(1)}
                           : {pokemon.stats[1].base_stat}{" "}
-                        </span>
+                        </p>
                         <span>
                           {" "}
                           {pokemon.stats[2].stat.name.charAt(0).toUpperCase() +
