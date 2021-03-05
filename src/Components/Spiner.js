@@ -2,7 +2,10 @@ import "./Spiner.css";
 
 const Spinner = () => {
   return (
-    <div className="lds-grid">
+    <div className="lds-spinner">
+      <div></div>
+      <div></div>
+      <div></div>
       <div></div>
       <div></div>
       <div></div>

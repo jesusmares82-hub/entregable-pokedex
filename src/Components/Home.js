@@ -7,9 +7,9 @@ import pokemon from "../img/pokemon.png";
 const Home = () => {
   let history = useHistory();
   return (
-    <div>
+    <div className="mt-5">
       <img src={pokemon} alt="pokemon-logo" />
-      <h4>Welcome to Pokedex by Squad 12.</h4>
+      <p>Welcome to Pokedex by Squad 12.</p>
       <p>March 2020.</p>
       <Button
         className="mb-3"

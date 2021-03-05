@@ -17,14 +17,6 @@ function App() {
         <div>
           <AuthButton />
 
-          <ul style={{ listStyleType: "none" }}>
-            <li>
-              <Link to="/">
-                {" "}
-                <h4>About Pokedex </h4>
-              </Link>
-            </li>
-          </ul>
           <Switch>
             <ProtectedRoute exact path="/pokedex">
               <PublicPage />
@@ -38,6 +30,10 @@ function App() {
             <ProtectedRoute exact path={"/pokedex/pokemon/:id/encounters"}>
               <EncountersPokemon />
             </ProtectedRoute>
+            <Route path="*">
+              <p>La ruta es invalida</p>
+              <Link to="/">Ir a el Listado</Link>
+            </Route>
             <ProtectedRoute exact path="/">
               <Home />
             </ProtectedRoute>

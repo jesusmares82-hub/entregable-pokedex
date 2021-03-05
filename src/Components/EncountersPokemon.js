@@ -5,6 +5,10 @@ import Button from "react-bootstrap/Button";
 import { TiArrowBackOutline } from "react-icons/ti";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { SiOpenstreetmap } from "react-icons/si";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Spinner from "./Spiner";
 
 const EncountersPokemon = () => {
   let { id } = useParams();
@@ -14,11 +18,14 @@ const EncountersPokemon = () => {
   const [data, setData] = useState();
   const [dataRender, setDataRender] = useState([]);
 
+  const [hasData, setHasData] = useState(false);
+
   useEffect(() => {
     axios
       .get(`https://pokeapi.co/api/v2/pokemon/${encounters}/encounters`)
       .then((dataApi) => {
         setData(dataApi);
+        setHasData(true);
       })
       .catch((err) => {
         console.log(err);
@@ -29,9 +36,9 @@ const EncountersPokemon = () => {
     if (data) {
       const renderLocation = data.data.map((values, index) => (
         <div key={values + index}>
-          <p>
+          <span className="card-encounters text-center">
             <FaMapMarkedAlt /> Location area: {values.location_area.name}
-          </p>
+          </span>
         </div>
       ));
       setDataRender(renderLocation);
@@ -41,13 +48,24 @@ const EncountersPokemon = () => {
   return (
     <div>
       <h2> {"Encounters: "}</h2>
-      {dataRender.length > 0 ? (
-        <h5>{dataRender && dataRender}</h5>
+      {hasData ? (
+        <Container>
+          <Row>
+            <Col className="col-lg-3 mt-3">
+              {" "}
+              {dataRender && dataRender.length > 0 ? (
+                <h5>{dataRender && dataRender}</h5>
+              ) : (
+                <h5 className="mt-3 mb-5">
+                  {" "}
+                  <SiOpenstreetmap /> Location not found
+                </h5>
+              )}
+            </Col>
+          </Row>
+        </Container>
       ) : (
-        <h5 className="mt-3 mb-5">
-          {" "}
-          <SiOpenstreetmap /> Location not found
-        </h5>
+        <Spinner />
       )}
       <Button
         className="mt-5 mb-3"

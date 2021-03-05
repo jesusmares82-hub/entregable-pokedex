@@ -41,6 +41,7 @@ const SearchBox = ({
             onChange={(e) => {
               handleSearchTermType(e.target.value.toLowerCase());
             }}
+            onFocus={() => handleClearTerm()}
           >
             <option>Select a type</option>
             {types.map((value, index) => {
@@ -53,6 +54,7 @@ const SearchBox = ({
           </Form.Control>
         </Form.Group>
       </Form>
+      <Form.Label>Filter pokemon by name or id:</Form.Label>
       <InputGroup className="pr-5 pl-5">
         <FormControl
           className="custom-select "
@@ -66,6 +68,7 @@ const SearchBox = ({
             const value = e.target.value;
             setSearchTerm(value.toLowerCase());
           }}
+          onFocus={() => handleClearTerm()}
         />
         <InputGroup.Append>
           <Button

@@ -17,6 +17,7 @@ const PublicPage = ({ children, ...props }) => {
   const [perPage, setPerPage] = useState(4);
   const [pageCount, setPageCount] = useState(0);
   const [hasData, setHasData] = useState(true);
+  const [messageError, setMessageError] = useState("");
 
   const { user } = useAuth();
 
@@ -46,6 +47,14 @@ const PublicPage = ({ children, ...props }) => {
         .then((res) => {
           setPokemon(res.data);
           setHasData(true);
+          setMessageError(false);
+        })
+        .catch((err) => {
+          console.log(err.response);
+          setMessageError(err.response.data);
+          /*if (err.response.status === 404) {
+            throw err;
+          }*/
         });
     }
   };
@@ -75,6 +84,7 @@ const PublicPage = ({ children, ...props }) => {
     setPageCount(0);
     setPokes([]);
     setPokemon(null);
+    setMessageError("");
   };
 
   const handlePageClick = (e) => {
@@ -84,11 +94,9 @@ const PublicPage = ({ children, ...props }) => {
   };
 
   return (
-    <div className="text-center poke-details">
-      <h6 className="text-center">
-        <strong>Welcome: {user}</strong>
-      </h6>
-      <img src={pokemonlogo} alt="pokemon-logo" />
+    <div className="text-center poke-details font-family">
+      <h4 className="text-center mb-4">Welcome Trainer: {user}</h4>
+      <img className="mb-4" src={pokemonlogo} alt="pokemon-logo" />
       <div>
         <SearchBox
           handleSearchTermType={handleSearchType}
@@ -121,6 +129,20 @@ const PublicPage = ({ children, ...props }) => {
 
           {pokemon && (
             <>
+              <ReactPaginate
+                className="color-text-a text-center"
+                previousLabel={"<"}
+                nextLabel={">"}
+                breakLabel={""}
+                breakClassName={"break-me"}
+                pageCount={pageCount}
+                marginPagesDisplayed={0}
+                pageRangeDisplayed={9}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+              />
               <div
                 className={
                   pokemon
@@ -198,6 +220,7 @@ const PublicPage = ({ children, ...props }) => {
       ) : (
         <Spinner />
       )}
+      <h3>{messageError}</h3>
     </div>
   );
 };
